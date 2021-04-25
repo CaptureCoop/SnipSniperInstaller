@@ -1,0 +1,1 @@
+java -Dfile.encoding=GB18030 -jar SnipSniper.jar %1
