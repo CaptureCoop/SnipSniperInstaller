@@ -1,0 +1,12 @@
+/bin/
+/.classpath
+/.project
+/.idea/
+/out/
+/.gradle/
+/build/
+/gradle/
+gradlew
+gradlew.bat
+SnipSniperInstaller.iml
+settings.gradle
