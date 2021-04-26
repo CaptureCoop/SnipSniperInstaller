@@ -4,8 +4,17 @@ The best way to get the Java Version of SnipSniper up and running!
 
 ### Installation
 
-Simply download SnipSniperInstaller.jar and place it in a suitable location.
-Dont open it yet! It is not finished yet!
+Simply download SnipSniperInstaller.jar and run it.
+
+It will download the newest version of SnipSniper and create Shortcuts as needed!
+
+To update SnipSniper with it simply run it and point it to your prior Installation location.
+
+### Libraries
+
+SnipSniper uses these libraries in order to function properly
+
+* [mslinks](https://mvnrepository.com/artifact/com.erigir/mslinks/0.0.2+5) - Used for creating Shortcuts.
 
 License
 ----
