@@ -19,7 +19,9 @@ import java.nio.file.StandardCopyOption;
 
 public class InstallerWindow extends JFrame {
 
-    public static String jarLocation = new File(System.getProperty("user.home") + "\\.SnipSniper\\").getAbsolutePath();
+    public static String userHome = System.getProperty("user.home");
+
+    public static String jarLocation = new File(userHome + "\\.SnipSniper\\").getAbsolutePath();
 
     public JButton btnChangeLocation = new JButton("Change location");
     public JLabel labelChangeLocation = new JLabel(jarLocation, SwingConstants.RIGHT);;
@@ -27,7 +29,7 @@ public class InstallerWindow extends JFrame {
     public JCheckBox cbAutoStart = new JCheckBox();
     public JCheckBox cbDesktopShortcut = new JCheckBox();
 
-    JFileChooser jfc = new JFileChooser(System.getProperty("user.home"));
+    JFileChooser jfc = new JFileChooser(userHome);
 
     public InstallerWindow() {
         this.setTitle("SnipSniper Installer");
@@ -35,7 +37,6 @@ public class InstallerWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainPanel = new JPanel(new GridLayout(0,1));
-
         int margin = 10;
 
         JPanel row0 = new JPanel(new GridLayout(0,2));
@@ -91,6 +92,16 @@ public class InstallerWindow extends JFrame {
         this.setVisible(true);
     }
 
+    public void createShellLink(String location) {
+        try {
+            ShellLink sl = ShellLink.createLink(jarLocation + "\\SnipSniper.bat");
+            sl.setIconLocation(jarLocation + "\\SnSn.ico");
+            sl.saveTo(userHome + location);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void go() {
         String downloadJarUrl = "https://github.com/SvenWollinger/SnipSniper/releases/latest/download/SnipSniper.jar";
         String tempDir = System.getProperty("java.io.tmpdir");
@@ -104,9 +115,15 @@ public class InstallerWindow extends JFrame {
             Utils.copy(getClass().getResourceAsStream("/SnSn.ico"), jarLocation + "\\SnSn.ico");
             Utils.copy(getClass().getResourceAsStream("/SnipSniper.bat"), jarLocation + "\\SnipSniper.bat");
 
-            ShellLink sl = ShellLink.createLink(jarLocation + "\\SnipSniper.bat");
-            sl.setIconLocation(jarLocation + "\\SnSn.ico");
-            sl.saveTo(""); //TODO: Finish this
+            if(cbDesktopShortcut.isSelected())
+                createShellLink("\\Desktop\\SnipSniper.lnk");
+
+            if(cbAutoStart.isSelected())
+                createShellLink("\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\SnipSniper.lnk");
+
+            if(cbStartMenu.isSelected())
+                createShellLink("\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\SnipSniper.lnk");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
