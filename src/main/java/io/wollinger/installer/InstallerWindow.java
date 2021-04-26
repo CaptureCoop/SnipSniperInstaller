@@ -3,6 +3,7 @@ package io.wollinger.installer;
 
 import com.erigir.mslinks.ShellLink;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -11,6 +12,7 @@ import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,14 +46,17 @@ public class InstallerWindow extends JFrame {
 
     JFileChooser jfc = new JFileChooser(userHome);
 
+    public JPanel mainPanel;
     public JPanel installerPanel;
     public JPanel startPanel;
 
     public InstallerWindow() {
         instance = this;
         this.setTitle("SnipSniper Installer");
-        this.setSize(512,256);
+        this.setSize(512,512);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        mainPanel = new JPanel(new GridLayout(0,1));
 
         installerPanel = new JPanel(new GridLayout(0,1));
         int margin = 10;
@@ -97,8 +102,6 @@ public class InstallerWindow extends JFrame {
         row3.add(cbDesktopShortcut);
         installerPanel.add(row3);
 
-        //https://github.com/SvenWollinger/SnipSniper/blob/master/LICENSE
-
         JPanel row4 = new JPanel(new GridLayout(0,2));
         row4.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
         JEditorPane label5 = new JEditorPane ("text/html", "<html>I have read the license <a href=\"https://github.com/SvenWollinger/SnipSniper/blob/master/LICENSE\">here</a></html>");
@@ -119,12 +122,7 @@ public class InstallerWindow extends JFrame {
 
         row4.add(label5);
         JCheckBox cbLicense = new JCheckBox();
-        cbLicense.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                installBtn.setEnabled(cbLicense.isSelected());
-            }
-        });
+        cbLicense.addActionListener(e -> installBtn.setEnabled(cbLicense.isSelected()));
         row4.add(cbLicense);
         installerPanel.add(row4);
 
@@ -139,15 +137,13 @@ public class InstallerWindow extends JFrame {
         startPanel = new JPanel(new GridLayout(0,1));
         startPanel.setBorder(BorderFactory.createEmptyBorder(margin, margin*15, margin/2, margin*15));
         JButton btnInstall = new JButton("Install");
-        btnInstall.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                instance.setVisible(false);
-                instance.remove(startPanel);
-                instance.add(installerPanel);
-                instance.setVisible(true);
-            }
+        btnInstall.addActionListener(e -> {
+            instance.setVisible(false);
+            mainPanel.remove(startPanel);
+            mainPanel.add(installerPanel);
+            instance.setVisible(true);
         });
+
         JButton btnUninstall = new JButton("Uninstall");
         btnUninstall.addActionListener(e -> {
             deleteShellLink(overrideDesktop);
@@ -157,7 +153,18 @@ public class InstallerWindow extends JFrame {
         });
         startPanel.add(btnInstall);
         startPanel.add(btnUninstall);
-        this.add(startPanel);
+
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(getClass().getResourceAsStream("/splash.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JLabel splash = new JLabel(new ImageIcon(myPicture.getScaledInstance((int)(myPicture.getWidth() / 1.5F),(int)(myPicture.getHeight() / 1.5F),1)));
+        mainPanel.add(splash);
+        mainPanel.add(startPanel);
+
+        this.add(mainPanel);
 
         this.setVisible(true);
     }
@@ -202,8 +209,8 @@ public class InstallerWindow extends JFrame {
 
             JOptionPane.showMessageDialog(instance, "Done!");
             setVisible(false);
-            remove(installerPanel);
-            add(startPanel);
+            mainPanel.remove(installerPanel);
+            mainPanel.add(startPanel);
             setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
