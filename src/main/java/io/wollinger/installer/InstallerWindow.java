@@ -154,13 +154,20 @@ public class InstallerWindow extends JFrame {
         startPanel.add(btnInstall);
         startPanel.add(btnUninstall);
 
-        BufferedImage myPicture = null;
+        BufferedImage splashImg = null;
         try {
-            myPicture = ImageIO.read(getClass().getResourceAsStream("/splash.png"));
+            splashImg = ImageIO.read(getClass().getResourceAsStream("/splash.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JLabel splash = new JLabel(new ImageIcon(myPicture.getScaledInstance((int)(myPicture.getWidth() / 1.5F),(int)(myPicture.getHeight() / 1.5F),1)));
+
+        Graphics g = splashImg.getGraphics();
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.PLAIN, 30));
+        int width = g.getFontMetrics().stringWidth(Main.version);
+        g.drawString(Main.version,splashImg.getWidth()-width,splashImg.getHeight()-5);
+        g.dispose();
+        JLabel splash = new JLabel(new ImageIcon(splashImg.getScaledInstance((int)(splashImg.getWidth() / 1.5F),(int)(splashImg.getHeight() / 1.5F),5)));
         mainPanel.add(splash);
         mainPanel.add(startPanel);
 
