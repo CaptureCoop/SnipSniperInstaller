@@ -1,1 +1,1 @@
-start javaw -Dfile.encoding=GB18030 -jar SnipSniper.jar %*
+start javaw -Dfile.encoding=GB18030 -jar %0\..\SnipSniper.jar %*
