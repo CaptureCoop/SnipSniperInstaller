@@ -6,22 +6,15 @@ import com.erigir.mslinks.ShellLink;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -31,14 +24,14 @@ public class InstallerWindow extends JFrame {
 
     public static String jarLocation = new File(userHome + "\\.SnipSniper\\").getAbsolutePath();
 
-    public static String overrideDesktop = "\\Desktop\\SnipSniper.lnk";
-    public static String overrideStartup = "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\SnipSniper.lnk";
-    public static String overrideMenu = "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\SnipSniper.lnk";
+    public static String overrideDesktop = "\\Desktop\\";
+    public static String overrideStartup = "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\";
+    public static String overrideMenu = "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\";
 
     public static JFrame instance;
 
     public JButton btnChangeLocation = new JButton("Change location");
-    public JLabel labelChangeLocation = new JLabel(jarLocation, SwingConstants.RIGHT);;
+    public JLabel labelChangeLocation = new JLabel(jarLocation, SwingConstants.RIGHT);
     public JCheckBox cbStartMenu = new JCheckBox();
     public JCheckBox cbAutoStart = new JCheckBox();
     public JCheckBox cbDesktopShortcut = new JCheckBox();
@@ -146,9 +139,11 @@ public class InstallerWindow extends JFrame {
 
         JButton btnUninstall = new JButton("Uninstall");
         btnUninstall.addActionListener(e -> {
-            deleteShellLink(overrideDesktop);
-            deleteShellLink(overrideStartup);
-            deleteShellLink(overrideMenu);
+            deleteShellLink(overrideDesktop + "SnipSniper.lnk");
+            deleteShellLink(overrideDesktop + "SnipSniperEditor.lnk");
+            deleteShellLink(overrideStartup + "SnipSniper.lnk");
+            deleteShellLink(overrideMenu + "SnipSniper.lnk");
+            deleteShellLink(overrideMenu + "SnipSniperEditor.lnk");
             JOptionPane.showMessageDialog(instance, "SnipSniper has been removed from Desktop/Startup/Menu.\nPlease manually remove it from the Installation directory you originally chose.");
         });
         startPanel.add(btnInstall);
@@ -182,10 +177,10 @@ public class InstallerWindow extends JFrame {
             link.delete();
     }
 
-    public void createShellLink(String location) {
+    public void createShellLink(String location, String original, String icon) {
         try {
-            ShellLink sl = ShellLink.createLink(jarLocation + "\\SnipSniper.bat");
-            sl.setIconLocation(jarLocation + "\\SnSn.ico");
+            ShellLink sl = ShellLink.createLink(jarLocation + "\\" + original);
+            sl.setIconLocation(jarLocation + "\\" + icon);
             sl.saveTo(userHome + location);
         } catch (IOException e) {
             e.printStackTrace();
@@ -207,16 +202,22 @@ public class InstallerWindow extends JFrame {
             Files.move(Paths.get(tempDir + file), Paths.get(jarLocation + "\\" + file), StandardCopyOption.REPLACE_EXISTING);
 
             Utils.copy(getClass().getResourceAsStream("/SnSn.ico"), jarLocation + "\\SnSn.ico");
+            Utils.copy(getClass().getResourceAsStream("/editor.ico"), jarLocation + "\\editor.ico");
             Utils.copy(getClass().getResourceAsStream("/SnipSniper.bat"), jarLocation + "\\SnipSniper.bat");
+            Utils.copy(getClass().getResourceAsStream("/SnipSniperEditor.bat"), jarLocation + "\\SnipSniperEditor.bat");
 
-            if(cbDesktopShortcut.isSelected())
-                createShellLink(overrideDesktop);
+            if(cbDesktopShortcut.isSelected()) {
+                createShellLink(overrideDesktop + "SnipSniper.lnk", "SnipSniper.bat", "SnSn.ico");
+                createShellLink(overrideDesktop + "SnipSniperEditor.lnk", "SnipSniperEditor.bat", "editor.ico");
+            }
 
             if(cbAutoStart.isSelected())
-                createShellLink(overrideStartup);
+                createShellLink(overrideStartup + "SnipSniper.lnk", "SnipSniper.bat", "SnSn.ico");
 
-            if(cbStartMenu.isSelected())
-                createShellLink(overrideMenu);
+            if(cbStartMenu.isSelected()) {
+                createShellLink(overrideMenu + "SnipSniper.lnk", "SnipSniper.bat", "SnSn.ico");
+                createShellLink(overrideMenu + "SnipSniperEditor.lnk", "SnipSniperEditor.bat", "editor.ico");
+            }
 
             JOptionPane.showMessageDialog(instance, "Done!");
             setVisible(false);
