@@ -201,22 +201,22 @@ public class InstallerWindow extends JFrame {
             Files.copy(inputStream, Paths.get(tempDir + file), StandardCopyOption.REPLACE_EXISTING);
             Files.move(Paths.get(tempDir + file), Paths.get(jarLocation + "\\" + file), StandardCopyOption.REPLACE_EXISTING);
 
-            Utils.copy(getClass().getResourceAsStream("/SnSn.ico"), jarLocation + "\\SnSn.ico");
-            Utils.copy(getClass().getResourceAsStream("/editor.ico"), jarLocation + "\\editor.ico");
+            Utils.copy(getClass().getResourceAsStream("/SnipSniper.ico"), jarLocation + "\\SnipSniper.ico");
+            Utils.copy(getClass().getResourceAsStream("/SnipSniperEditor.ico"), jarLocation + "\\SnipSniperEditor.ico");
             Utils.copy(getClass().getResourceAsStream("/SnipSniper.bat"), jarLocation + "\\SnipSniper.bat");
             Utils.copy(getClass().getResourceAsStream("/SnipSniperEditor.bat"), jarLocation + "\\SnipSniperEditor.bat");
 
             if(cbDesktopShortcut.isSelected()) {
-                createShellLink(overrideDesktop + "SnipSniper.lnk", "SnipSniper.bat", "SnSn.ico");
-                createShellLink(overrideDesktop + "SnipSniperEditor.lnk", "SnipSniperEditor.bat", "editor.ico");
+                createShellLink(overrideDesktop + "SnipSniper.lnk", "SnipSniper.bat", "SnipSniper.ico");
+                createShellLink(overrideDesktop + "SnipSniperEditor.lnk", "SnipSniperEditor.bat", "SnipSniperEditor.ico");
             }
 
             if(cbAutoStart.isSelected())
-                createShellLink(overrideStartup + "SnipSniper.lnk", "SnipSniper.bat", "SnSn.ico");
+                createShellLink(overrideStartup + "SnipSniper.lnk", "SnipSniper.bat", "SnipSniper.ico");
 
             if(cbStartMenu.isSelected()) {
-                createShellLink(overrideMenu + "SnipSniper.lnk", "SnipSniper.bat", "SnSn.ico");
-                createShellLink(overrideMenu + "SnipSniperEditor.lnk", "SnipSniperEditor.bat", "editor.ico");
+                createShellLink(overrideMenu + "SnipSniper.lnk", "SnipSniper.bat", "SnipSniper.ico");
+                createShellLink(overrideMenu + "SnipSniperEditor.lnk", "SnipSniperEditor.bat", "SnipSniperEditor.ico");
             }
 
             JOptionPane.showMessageDialog(instance, "Done!");
