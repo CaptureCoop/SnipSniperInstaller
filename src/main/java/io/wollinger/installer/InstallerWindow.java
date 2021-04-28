@@ -193,6 +193,10 @@ public class InstallerWindow extends JFrame {
     }
 
     public void go() {
+        File mainFolder = new File(jarLocation);
+        if(!mainFolder.exists())
+            mainFolder.mkdirs();
+
         String downloadJarUrl = "https://github.com/SvenWollinger/SnipSniper/releases/latest/download/SnipSniper.jar";
         String tempDir = System.getProperty("java.io.tmpdir");
 
