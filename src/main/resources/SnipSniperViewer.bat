@@ -1,0 +1,1 @@
+start javaw -Dfile.encoding=GB18030 -jar %0\..\SnipSniper.jar -viewer %1
