@@ -45,9 +45,14 @@ public class InstallerWindow extends JFrame {
 
     public InstallerWindow() {
         instance = this;
-        this.setTitle("SnipSniper Installer");
-        this.setSize(512,512);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("SnipSniper Installer");
+        setSize(512,512);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        GraphicsDevice device = getGraphicsConfiguration().getDevice();
+        int monitorWidth = device.getDisplayMode().getWidth();
+        int monitorHeight = device.getDisplayMode().getHeight();
+        setLocation(monitorWidth/2 - getWidth()/2, monitorHeight/2 - getHeight()/2);
 
         mainPanel = new JPanel(new GridLayout(0,1));
 
@@ -168,9 +173,9 @@ public class InstallerWindow extends JFrame {
         mainPanel.add(splash);
         mainPanel.add(startPanel);
 
-        this.add(mainPanel);
+        add(mainPanel);
 
-        this.setVisible(true);
+        setVisible(true);
     }
 
     public void deleteShellLink(String location) {
@@ -205,6 +210,7 @@ public class InstallerWindow extends JFrame {
 
             Utils.copy(getClass().getResourceAsStream("/SnipSniper.ico"), jarLocation + "\\SnipSniper.ico");
             Utils.copy(getClass().getResourceAsStream("/SnipSniperEditor.ico"), jarLocation + "\\SnipSniperEditor.ico");
+            Utils.copy(getClass().getResourceAsStream("/SnipSniperViewer.ico"), jarLocation + "\\SnipSniperViewer.ico");
             Utils.copy(getClass().getResourceAsStream("/SnipSniper.bat"), jarLocation + "\\SnipSniper.bat");
             Utils.copy(getClass().getResourceAsStream("/SnipSniperEditor.bat"), jarLocation + "\\SnipSniperEditor.bat");
             Utils.copy(getClass().getResourceAsStream("/SnipSniperViewer.bat"), jarLocation + "\\SnipSniperViewer.bat");
