@@ -227,7 +227,7 @@ public class InstallerWindow extends JFrame {
             if(cbStartMenu.isSelected()) {
                 createShellLink(overrideMenu + "SnipSniper.lnk", "SnipSniper.bat", "SnipSniper.ico");
                 createShellLink(overrideMenu + "SnipSniperEditor.lnk", "SnipSniperEditor.bat", "SnipSniperEditor.ico");
-                createShellLink(overrideDesktop + "SnipSniperViewer.lnk", "SnipSniperViewer.bat", "SnipSniperViewer.ico");
+                createShellLink(overrideMenu + "SnipSniperViewer.lnk", "SnipSniperViewer.bat", "SnipSniperViewer.ico");
             }
 
             JOptionPane.showMessageDialog(instance, "Done!");
