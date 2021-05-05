@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Main {
 
-    public static String version = "20210428_1";
+    public static String version = "20210505_1";
 
     public static void main(String[] args) {
         try {
