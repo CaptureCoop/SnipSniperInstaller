@@ -102,7 +102,7 @@ public class InstallerWindow extends JFrame {
 
         JPanel row4 = new JPanel(new GridLayout(0,2));
         row4.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
-        JEditorPane label5 = new JEditorPane ("text/html", "<html>I have read the license <a href=\"https://github.com/SvenWollinger/SnipSniper/blob/master/LICENSE\">here</a></html>");
+        JEditorPane label5 = new JEditorPane ("text/html", "<html>I have read the license <a href=\"https://github.com/CaptureCoop/SnipSniper/blob/master/LICENSE\">here</a></html>");
         label5.setEditable(false);
         label5.setOpaque(false);
         label5.setSelectionColor(new Color(0,0,0,0));
@@ -199,7 +199,7 @@ public class InstallerWindow extends JFrame {
         if(!mainFolder.exists())
             mainFolder.mkdirs();
 
-        String downloadJarUrl = "https://github.com/SvenWollinger/SnipSniper/releases/latest/download/SnipSniper.jar";
+        String downloadJarUrl = "https://github.com/CaptureCoop/SnipSniper/releases/latest/download/SnipSniper.jar";
         String tempDir = System.getProperty("java.io.tmpdir");
 
         try {
