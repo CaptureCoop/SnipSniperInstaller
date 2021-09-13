@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClassName = "io.wollinger.installer.Main"
+    mainClassName = "org.snipsniper.installer.Main"
 }
 
 group 'io.wollinger'
@@ -25,7 +25,7 @@ dependencies {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'io.wollinger.installer.Main'
+                'Main-Class': 'org.snipsniper.installer.Main'
         )
     }
     //https://stackoverflow.com/questions/52816630/unable-to-create-a-jar-of-my-jda-project-because-of-pom-dependency
