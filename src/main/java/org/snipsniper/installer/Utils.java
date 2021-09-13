@@ -1,4 +1,4 @@
-package io.wollinger.installer;
+package org.snipsniper.installer;
 
 import java.io.*;
 import java.nio.file.Files;

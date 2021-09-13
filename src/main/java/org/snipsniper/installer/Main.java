@@ -1,4 +1,4 @@
-package io.wollinger.installer;
+package org.snipsniper.installer;
 
 import javax.swing.*;
 
